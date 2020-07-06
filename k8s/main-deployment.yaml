@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: error-tracker-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: api
+          image: rbertram8/error-tracker-api:v1.0
+          ports:
+            - containerPort: 8080
+          env:
+          - name: db_credentials
+            value: root:root@(
+          - name: db_connection
+            value: 127.0.0.1
+          - name: db_parameters
+            value: :3306)/error-tracker?charset=utf8&parseTime=True&loc=Local
+        - name: client
+          image: rbertram8/error-tracker-client:v1.0
+          ports:
+            - containerPort: 80

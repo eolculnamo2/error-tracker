@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  api:
+    build: "./api"
+    environment:
+      db_credentials: root:root@(
+      db_connection: host.docker.internal
+      db_parameters: :3306)/error-tracker?charset=utf8&parseTime=True&loc=Local
+    ports:
+      - "8080:8080"
+  client:
+    build: "./client"
+    ports:
+      - "80:80"

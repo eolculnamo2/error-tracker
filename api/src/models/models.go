@@ -9,11 +9,11 @@ type Organization struct {
 }
 
 type User struct {
-	Email        string
-	Password     string 
-	FirstName    string
-	LastName     string
+	Email          string
+	Password       string 
+	FirstName      string
+	LastName       string
 	OrganizationID uint
-	Enabled      uint8
-	Authority    string
+	Enabled        uint8
+	Authority      string
 }

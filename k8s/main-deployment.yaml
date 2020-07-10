@@ -19,11 +19,11 @@ spec:
             - containerPort: 8080
           env:
           - name: db_credentials
-            value: root:root@(
+            value: bf4be85d529797:ca553c8e@
           - name: db_connection
-            value: 127.0.0.1
+            value: us-cdbr-east-02.cleardb.com/
           - name: db_parameters
-            value: :3306)/error-tracker?charset=utf8&parseTime=True&loc=Local
+            value: heroku_4d13ce5b7be4453?reconnect=truecharset=utf8&parseTime=True&loc=Local
         - name: client
           image: rbertram8/error-tracker-client:v1.0
           ports:

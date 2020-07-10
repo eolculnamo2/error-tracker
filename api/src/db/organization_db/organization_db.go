@@ -1,22 +1,15 @@
 package organizationdb
 
 import (
-	"fmt"
-	"github.com/jinzhu/gorm"
+	"log"
 	"github.com/eolculnamo2/error-tracker/api/src/models"
 	"github.com/eolculnamo2/error-tracker/api/src/structs"
+	"github.com/eolculnamo2/error-tracker/api/src/db"
 	"github.com/eolculnamo2/error-tracker/api/src/constants/auth_types"
 )
 
-// var db *gorm.DB
-
 func SaveOrg(newOrg structs.NewOrg) {
-	db, err := gorm.Open("mysql", "root:root@(localhost:3306)/error-tracker?charset=utf8&parseTime=True&loc=Local")
-	if err != nil {
-		panic("Failed to connect to the database" + err.Error())
-	}
-	db.AutoMigrate(&models.Organization{}, &models.User{})
-	defer db.Close()
+	db.DbConnection.AutoMigrate(&models.Organization{}, &models.User{})
 	var org = models.Organization{
 		Name: newOrg.Name,
 		Website: newOrg.Website,
@@ -32,11 +25,6 @@ func SaveOrg(newOrg structs.NewOrg) {
 			},
 		},
 	}
-	db.Create(&org)
-	//db.Save(&org)
-	fmt.Println("Created user")
+	db.DbConnection.Create(&org)
+	log.Println("Created user: " + newOrg.Email)
 }
-
-// func PassDb(database *gorm.DB) {
-// 	orgStorage = OrgStorage{ db: database}
-// }

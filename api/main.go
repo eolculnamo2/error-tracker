@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"os"
+	// "os"
 	"github.com/eolculnamo2/error-tracker/api/src"
 	"github.com/eolculnamo2/error-tracker/api/src/db"
 	"github.com/jinzhu/gorm"
@@ -14,8 +14,8 @@ var DB *gorm.DB
 func dbInit() {
 	var err error
 	// 
-	connectionString := os.Getenv("db_credentials") + os.Getenv("db_connection") + os.Getenv("db_parameters")
-	// connectionString := "root:root@(localhost:3306)/error-tracker?charset=utf8&parseTime=True&loc=Local"
+	// connectionString := os.Getenv("db_credentials") + os.Getenv("db_connection") + os.Getenv("db_parameters")
+	connectionString := "root:root@(localhost:3306)/error-tracker?charset=utf8&parseTime=True&loc=Local"
 	log.Println(connectionString)
 	db.DbConnection, err = gorm.Open("mysql", connectionString)
 	if err != nil {

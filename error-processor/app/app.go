@@ -2,7 +2,7 @@
 package app
 
 import (
-	"net/http"
+	"github.com/eolculnamo2/error-tracker/error-processor/app/resources"
 	"time"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -20,8 +20,6 @@ func StartRoutes() {
 		AllowCredentials: true,
 		MaxAge: 12 * time.Hour,
 	}))
-	router.GET("/test", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"test": "test",})
-	})
+	resources.IncomingErrRoutes(router)
 	router.Run()
 }

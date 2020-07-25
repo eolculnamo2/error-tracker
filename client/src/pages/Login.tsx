@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -12,18 +13,55 @@ import {
   IconStyling,
   LoginBtnsDiv,
   InputDiv,
+  Errors,
 } from "../styling/LoginStyling";
 import { StateContext } from "../context/StateContext";
 
 const Login = () => {
   const { state, dispatch } = useContext(StateContext);
 
-  // const { email } = state;
-  const [error, setError] = useState<string>("");
+  const { email, password } = state;
+
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+
+  const signIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (!email) {
+        setEmailError("Email address is required");
+      } else {
+        setEmailError("");
+      }
+      if (!password) {
+        setPasswordError("Password is required");
+      } else {
+        setPasswordError("");
+      }
+      if (email && password) {
+        let user = { email, password };
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        const body = JSON.stringify(user);
+
+        let res = await axios.post(
+          "http://localhost:8080/auth/login",
+          body,
+          config
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
-      {/* {email}  */}
       <Navbar />
       <MainSection>
         <SecondarySection>
@@ -32,21 +70,40 @@ const Login = () => {
               <InputDiv>
                 <IconStyling>
                   <FontAwesomeIcon icon="user-alt" />
+                  {state.email}
                 </IconStyling>
-                <input type="text" placeholder="Email Address" />
+                <input
+                  type="text"
+                  placeholder="Email Address"
+                  // value={state.email}
+                  // onChange={(event) =>
+                  //   dispatch({
+                  //     type: "UPDATE_EMAIL",
+                  //     payload: event.target.value,
+                  //   })
+                  // }
+                />
               </InputDiv>
+              <Errors>{emailError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
                 <IconStyling>
                   <FontAwesomeIcon icon="key" />
                 </IconStyling>
-                <input type="password" placeholder="Password" />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={state.password}
+                />
               </InputDiv>
+              <Errors>{passwordError}</Errors>
             </InputStyling>
             <LoginBtnsDiv>
               <LoginBtnnsSpacer1>
-                <NavLink to="/dashboard">Sign In</NavLink>
+                <NavLink to="/dashboard" onClick={signIn}>
+                  Sign In
+                </NavLink>
               </LoginBtnnsSpacer1>
               <LoginBtnnsSpacer2>
                 <NavLink to="/neworganization">New Organization</NavLink>

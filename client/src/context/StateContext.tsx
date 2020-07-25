@@ -10,11 +10,11 @@ export interface IState {
 }
 
 export const initialState = {
-  email: ".",
-  first_name: "",
-  last_name: "",
-  organization_name: "",
-  url: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  Name: "",
+  website: "",
   password: "",
 };
 
@@ -22,6 +22,9 @@ export enum APP_ACTIONS {
   UPDATE_EMAIL = "UPDATE_EMAIL",
   UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME",
   UPDATE_LAST_NAME = "UPDATE_LAST_NAME",
+  UPDATE_NAME = "UPDATE_NAME",
+  UPDATE_WEBSITE = "UPDATE_WEBSITE",
+  UPDATE_PASSWORD = "UPDATE_PASSWORD",
 }
 
 type AppAction = { [key: string]: (state: IState, action: any) => IState };
@@ -32,11 +35,23 @@ export const appActions: AppAction = {
   },
 
   [APP_ACTIONS.UPDATE_FIRST_NAME]: (state: IState, actions: any) => {
-    return { ...state, first_name: actions.payload };
+    return { ...state, firstName: actions.payload };
   },
 
   [APP_ACTIONS.UPDATE_LAST_NAME]: (state: any, actions: any) => {
-    return { ...state, last_name: actions.payload };
+    return { ...state, lastName: actions.payload };
+  },
+
+  [APP_ACTIONS.UPDATE_NAME]: (state: any, actions: any) => {
+    return { ...state, Name: actions.payload };
+  },
+
+  [APP_ACTIONS.UPDATE_WEBSITE]: (state: any, actions: any) => {
+    return { ...state, website: actions.payload };
+  },
+
+  [APP_ACTIONS.UPDATE_PASSWORD]: (state: any, actions: any) => {
+    return { ...state, password: actions.payload };
   },
 };
 

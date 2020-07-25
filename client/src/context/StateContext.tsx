@@ -10,7 +10,7 @@ export interface IState {
 }
 
 export const initialState = {
-  email: "",
+  email: ".",
   first_name: "",
   last_name: "",
   organization_name: "",
@@ -19,12 +19,12 @@ export const initialState = {
 };
 
 export enum APP_ACTIONS {
-  UPDATE_EMAIL = 'UPDATE_EMAIL',
-  UPDATE_FIRST_NAME = 'UPDATE_FIRST_NAME',
-  UPDATE_LAST_NAME = 'UPDATE_LAST_NAME'
+  UPDATE_EMAIL = "UPDATE_EMAIL",
+  UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME",
+  UPDATE_LAST_NAME = "UPDATE_LAST_NAME",
 }
 
-type AppAction = { [key: string]: (state: IState, action: any) => IState }
+type AppAction = { [key: string]: (state: IState, action: any) => IState };
 
 export const appActions: AppAction = {
   [APP_ACTIONS.UPDATE_EMAIL]: (state: IState, actions: any) => {
@@ -45,4 +45,3 @@ export const reducer = (state: IState, action: any) => {
 };
 
 export const StateContext: any = createContext(initialState);
- 

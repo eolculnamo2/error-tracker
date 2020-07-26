@@ -13,12 +13,12 @@ import {
   InputDiv,
   Errors,
 } from "../styling/NewOrgStyling";
-import { StateContext } from "../context/StateContext";
+import { StateContext, initialState, APP_ACTIONS } from "../context/StateContext";
 
 const NewOrg = () => {
   const { state, dispatch } = useContext(StateContext);
 
-  const { email, firstName, lastName, Name, website, password } = state;
+  const { email, firstName, lastName, Name, website, password } = initialState;
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -32,45 +32,48 @@ const NewOrg = () => {
   const createOrg = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!email) {
-        setEmailError("Email address is required");
+      if (!state.email)  {
+        setEmailError("Valid email address is required");
+      } 
+      if (state.email.includes("@")) {
+        setEmailError("fgfg");
       }
-      if (email) {
-        setEmailError("");
-      }
-      if (!firstName) {
+      if (!state.firstName) {
         setFirstNameError("Enter your first name");
       }
-      if (firstName) {
+      if (state.firstName) {
         setFirstNameError("");
       }
-      if (!lastName) {
+      if (!state.lastName) {
         setLastNameError("Enter your last name");
       }
-      if (lastName) {
+      if (state.lastName) {
         setLastNameError("");
       }
-      if (!Name) {
+      if (!state.Name) {
         setNameError("Organization name is required");
       }
-      if (Name) {
+      if (state.Name) {
         setNameError("");
       }
-      if (!website) {
+      if (!state.website) {
         setWebsiteError("Enter your organization's website url");
       }
-      if (website) {
+      if (state.website) {
         setWebsiteError("");
       }
-      if (!password) {
+      if (!state.password) {
         setPasswordError("Password is required");
       }
-      if (password) {
+      if (state.password) {
         setPasswordError("");
       }
-      if (confirmPassword !== password) {
+      if (confirmPassword === state.password  ) {
+        setConfirmError("");
+      } if (confirmPassword !== state.password  ) {
         setConfirmError("The passwords do not match");
-      } else {
+      }
+      else {
         let newOrg = { email, firstName, lastName, Name, website, password };
 
         const config = {
@@ -93,43 +96,78 @@ const NewOrg = () => {
   };
   return (
     <div>
+
       <Navbar />
       <MainSection>
         <SecondarySection>
           <LoginBox>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Enter your email address" />
+                <input
+                  type="text"
+                  placeholder="Enter your email address"
+                  onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_EMAIL,
+                      payload: e.target.value,
+                    })
+                  }
+                />
               </InputDiv>
               <Errors>{emailError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="First name" />
+                <input type="text" placeholder="First name" onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_FIRST_NAME,
+                      payload: e.target.value,
+                    })
+                  } />
               </InputDiv>
               <Errors>{firstNameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Last name" />
+                <input type="text" placeholder="Last name" onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_LAST_NAME,
+                      payload: e.target.value,
+                    })
+                  }  />
               </InputDiv>
               <Errors>{lastNameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Organization name" />
+                <input type="text" placeholder="Organization name" onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_NAME,
+                      payload: e.target.value,
+                    })
+                  } />
               </InputDiv>
               <Errors>{nameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Website URL" />
+                <input type="text" placeholder="Website URL" onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_WEBSITE,
+                      payload: e.target.value,
+                    })
+                  } />
               </InputDiv>
               <Errors>{websiteError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="password" placeholder="Enter a password" />
+                <input type="password" placeholder="Enter a password" onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_PASSWORD,
+                      payload: e.target.value,
+                    })
+                  } />
               </InputDiv>
               <Errors>{passwordError}</Errors>
             </InputStyling>

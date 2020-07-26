@@ -70,18 +70,12 @@ const Login = () => {
               <InputDiv>
                 <IconStyling>
                   <FontAwesomeIcon icon="user-alt" />
-                  {state.email}
+
                 </IconStyling>
                 <input
                   type="text"
                   placeholder="Email Address"
-                  // value={state.email}
-                  // onChange={(event) =>
-                  //   dispatch({
-                  //     type: "UPDATE_EMAIL",
-                  //     payload: event.target.value,
-                  //   })
-                  // }
+        
                 />
               </InputDiv>
               <Errors>{emailError}</Errors>

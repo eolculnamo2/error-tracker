@@ -88,7 +88,6 @@ const Login = () => {
                 <input
                   type="password"
                   placeholder="Password"
-                  value={state.password}
                 />
               </InputDiv>
               <Errors>{passwordError}</Errors>

@@ -20,59 +20,52 @@ const NewOrg = () => {
 
   const { email, firstName, lastName, Name, website, password } = initialState;
 
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [websiteError, setWebsiteError] = useState("");
-  const [confirmError, setConfirmError] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [firstNameError, setFirstNameError] = useState<string>("");
+  const [lastNameError, setLastNameError] = useState<string>("");
+  const [nameError, setNameError] = useState<string>("");
+  const [websiteError, setWebsiteError] = useState<string>("");
+  const [confirmError, setConfirmError] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const createOrg = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!state.email)  {
-        setEmailError("Valid email address is required");
-      } 
-      if (state.email.includes("@")) {
-        setEmailError("fgfg");
-      }
+      if (state.email.includes("@" && ".")) {
+        setEmailError("");
+      } else setEmailError("Valid email address is required");
       if (!state.firstName) {
         setFirstNameError("Enter your first name");
-      }
-      if (state.firstName) {
+      } else {
         setFirstNameError("");
       }
       if (!state.lastName) {
         setLastNameError("Enter your last name");
-      }
-      if (state.lastName) {
+      } else {
         setLastNameError("");
       }
       if (!state.Name) {
         setNameError("Organization name is required");
-      }
-      if (state.Name) {
+      } else {
         setNameError("");
       }
       if (!state.website) {
         setWebsiteError("Enter your organization's website url");
-      }
-      if (state.website) {
+      } else {
         setWebsiteError("");
       }
       if (!state.password) {
         setPasswordError("Password is required");
-      }
-      if (state.password) {
+      } else {
         setPasswordError("");
       }
-      if (confirmPassword === state.password  ) {
+      if ( confirmPassword === state.password  ) {
         setConfirmError("");
       } if (confirmPassword !== state.password  ) {
         setConfirmError("The passwords do not match");
       }
+    
       else {
         let newOrg = { email, firstName, lastName, Name, website, password };
 
@@ -84,11 +77,12 @@ const NewOrg = () => {
 
         const body = JSON.stringify(newOrg);
 
-        let res = await axios.post(
+        const res = await axios.post(
           "http://localhost:8080/new-org",
           body,
           config
         );
+
       }
     } catch (error) {
       console.log(error);
@@ -96,7 +90,6 @@ const NewOrg = () => {
   };
   return (
     <div>
-
       <Navbar />
       <MainSection>
         <SecondarySection>

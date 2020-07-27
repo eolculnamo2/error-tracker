@@ -25,20 +25,20 @@ const Universal = createGlobalStyle`
 
 function App() {
   library.add(fab, faKey, faUserAlt);
-  const [state, dispatch] = useReducer<any>(initialState, reducer);
+  const [state, dispatch] = useReducer<any>(reducer, initialState);
 
-  fetch('http://localhost:8080/test')
+  fetch("http://localhost:8080/test");
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
-    <Router>
-      <Universal />
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/neworganization" component={NewOrg} />
-        <Route exact path="/dashboard" component={Dashboard} />
-      </Switch>
-    </Router>
+      <Router>
+        <Universal />
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/neworganization" component={NewOrg} />
+          <Route exact path="/dashboard" component={Dashboard} />
+        </Switch>
+      </Router>
     </StateContext.Provider>
   );
 }

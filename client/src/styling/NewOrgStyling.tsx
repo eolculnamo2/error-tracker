@@ -92,3 +92,10 @@ export const LoginBtnnsSpacer2 = styled.span`
   }
   font-size: 0.8rem;
 `;
+
+export const Errors = styled.div`
+  color: red;
+  height: 0.3rem;
+  font-size: 0.8rem;
+  text-align: center;
+`;

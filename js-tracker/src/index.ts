@@ -17,9 +17,11 @@ const ERROR_PROCESSOR_URL = "http://localhost:8088";
       body: JSON.stringify({
         msg,
         url,
-        lineNo,
-        columnNo,
-        err,
+        lineNo: lineNo?.toString(),
+        columnNo: columnNo?.toString(),
+        err: err?.name,
+        website: window.location.origin,
+        teamId: "test-123",
       }),
     });
   }

@@ -15,7 +15,11 @@ import {
   InputDiv,
   Errors,
 } from "../styling/LoginStyling";
-import { StateContext } from "../context/StateContext";
+import {
+  StateContext,
+  initialState,
+  APP_ACTIONS,
+} from "../context/StateContext";
 
 const Login = () => {
   const { state, dispatch } = useContext(StateContext);
@@ -28,16 +32,17 @@ const Login = () => {
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!email) {
-        setEmailError("Email address is required");
+      if (!state.email.includes("@" || ".")) {
+        setEmailError("Valid email address is required");
       } else {
         setEmailError("");
       }
-      if (!password) {
+      if (!state.password) {
         setPasswordError("Password is required");
       } else {
         setPasswordError("");
       }
+
       if (email && password) {
         let user = { email, password };
 
@@ -70,12 +75,16 @@ const Login = () => {
               <InputDiv>
                 <IconStyling>
                   <FontAwesomeIcon icon="user-alt" />
-
                 </IconStyling>
                 <input
                   type="text"
                   placeholder="Email Address"
-        
+                  onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_EMAIL,
+                      payload: e.target.value,
+                    })
+                  }
                 />
               </InputDiv>
               <Errors>{emailError}</Errors>
@@ -88,6 +97,12 @@ const Login = () => {
                 <input
                   type="password"
                   placeholder="Password"
+                  onChange={(e) =>
+                    dispatch({
+                      type: APP_ACTIONS.UPDATE_PASSWORD,
+                      payload: e.target.value,
+                    })
+                  }
                 />
               </InputDiv>
               <Errors>{passwordError}</Errors>

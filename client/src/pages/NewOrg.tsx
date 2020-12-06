@@ -13,12 +13,16 @@ import {
   InputDiv,
   Errors,
 } from "../styling/NewOrgStyling";
-import { StateContext, initialState, APP_ACTIONS } from "../context/StateContext";
+import {
+  StateContext,
+  initialState,
+  APP_ACTIONS,
+} from "../context/StateContext";
 
 const NewOrg = () => {
   const { state, dispatch } = useContext(StateContext);
 
-  const { email, firstName, lastName, Name, website, password } = initialState;
+  const { email, firstName, lastName, Name, website, password } = state;
 
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
@@ -60,14 +64,29 @@ const NewOrg = () => {
       } else {
         setPasswordError("");
       }
-      if ( confirmPassword === state.password  ) {
+      if (confirmPassword === state.password) {
         setConfirmError("");
-      } if (confirmPassword !== state.password  ) {
+      }
+      if (confirmPassword !== state.password) {
         setConfirmError("The passwords do not match");
       }
-    
-      else {
-        let newOrg = { email, firstName, lastName, Name, website, password };
+      if (
+        email &&
+        firstName &&
+        lastName &&
+        Name &&
+        website &&
+        password &&
+        confirmPassword
+      ) {
+        let newOrg = {
+          email,
+          firstName,
+          lastName,
+          Name,
+          website,
+          password,
+        };
 
         const config = {
           headers: {
@@ -82,7 +101,6 @@ const NewOrg = () => {
           body,
           config
         );
-
       }
     } catch (error) {
       console.log(error);
@@ -111,56 +129,76 @@ const NewOrg = () => {
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="First name" onChange={(e) =>
+                <input
+                  type="text"
+                  placeholder="First name"
+                  onChange={(e) =>
                     dispatch({
                       type: APP_ACTIONS.UPDATE_FIRST_NAME,
                       payload: e.target.value,
                     })
-                  } />
+                  }
+                />
               </InputDiv>
               <Errors>{firstNameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Last name" onChange={(e) =>
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  onChange={(e) =>
                     dispatch({
                       type: APP_ACTIONS.UPDATE_LAST_NAME,
                       payload: e.target.value,
                     })
-                  }  />
+                  }
+                />
               </InputDiv>
               <Errors>{lastNameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Organization name" onChange={(e) =>
+                <input
+                  type="text"
+                  placeholder="Organization name"
+                  onChange={(e) =>
                     dispatch({
                       type: APP_ACTIONS.UPDATE_NAME,
                       payload: e.target.value,
                     })
-                  } />
+                  }
+                />
               </InputDiv>
               <Errors>{nameError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="text" placeholder="Website URL" onChange={(e) =>
+                <input
+                  type="text"
+                  placeholder="Website URL"
+                  onChange={(e) =>
                     dispatch({
                       type: APP_ACTIONS.UPDATE_WEBSITE,
                       payload: e.target.value,
                     })
-                  } />
+                  }
+                />
               </InputDiv>
               <Errors>{websiteError}</Errors>
             </InputStyling>
             <InputStyling>
               <InputDiv>
-                <input type="password" placeholder="Enter a password" onChange={(e) =>
+                <input
+                  type="password"
+                  placeholder="Enter a password"
+                  onChange={(e) =>
                     dispatch({
                       type: APP_ACTIONS.UPDATE_PASSWORD,
                       payload: e.target.value,
                     })
-                  } />
+                  }
+                />
               </InputDiv>
               <Errors>{passwordError}</Errors>
             </InputStyling>
